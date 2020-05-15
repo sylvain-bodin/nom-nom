@@ -1,21 +1,45 @@
 <template>
     <section class="content">
         <h3 class="title is-5">Ajouter une recette</h3>
-        <b-field label="Nom">
-            <b-input placeholder="Nom de la recette" v-model="recipe.name"></b-input>
-        </b-field>
-        <div class="buttons">
-            <b-button @click="reset" type="is-danger">Réinitialiser</b-button>
-            <b-button @click="add" type="is-primary">Ajouter</b-button>
-        </div>
+        <ValidationObserver ref="observer" v-slot="{ passes }">
+            <BInputWithValidation
+                    rules="required"
+                    type="text"
+                    label="Nom"
+                    v-model="recipe.name"
+                    placeholder="Nom de la recette"
+            />
+
+            <div class="buttons">
+                <b-button
+                        @click="passes(submit)"
+                        type="is-success"
+                        icon-left="check"
+                >
+                   Ajouter
+                </b-button>
+                <b-button
+                        @click="reset"
+                        icon-left="redo"
+                >
+                    Réinitialiser
+                </b-button>
+            </div>
+        </ValidationObserver>
     </section>
 </template>
 
 <script>
 import RecipeService from '@/services/recipe.service';
+import { ValidationObserver } from 'vee-validate';
+import BInputWithValidation from '../components/inputs/BInputWithValidation.vue';
 
 export default {
   name: 'RecipeCreate',
+  components: {
+    ValidationObserver,
+    BInputWithValidation,
+  },
   data() {
     return {
       recipe: {
@@ -27,8 +51,11 @@ export default {
   methods: {
     reset() {
       this.recipe.name = null;
+      requestAnimationFrame(() => {
+        this.$refs.observer.reset();
+      });
     },
-    add() {
+    submit() {
       RecipeService.add(this.recipe);
       this.$router.push({ name: 'RecipeList' });
     },
