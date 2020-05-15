@@ -12,6 +12,7 @@
   "dependencies": {
     "buefy": "^0.8.0",
     "core-js": "^3.6.4",
+    "vee-validate": "^3.3.0",
     "vue": "^2.6.11",
     "vue-router": "^3.1.6"
   },
