@@ -1,4 +1,5 @@
 import { RecipeModel } from '@/model/recipeModel';
+import HttpClient from '@/services/http.service';
 
 class RecipeService {
   private recipes: RecipeModel[] = [
@@ -7,11 +8,14 @@ class RecipeService {
     { id: 3, name: 'Recette 3' },
   ];
 
+  private httpClient = HttpClient;
+
   /**
    * Return all the recipes
    */
-  getAll(): RecipeModel[] {
-    return this.recipes;
+  getAll(): Promise<RecipeModel[]> {
+    return this.httpClient.get('/recipes')
+      .then((response) => response.data);
   }
 
   /**
@@ -19,7 +23,6 @@ class RecipeService {
    * @param id the recipe id.
    */
   getById(id: number): RecipeModel | undefined {
-    console.log(`Get recipe n ${id}`);
     return this.recipes.find((element) => element.id === id);
   }
 
@@ -32,4 +35,5 @@ class RecipeService {
   }
 }
 
-export default new RecipeService();
+const recipeService = new RecipeService();
+export default recipeService;
