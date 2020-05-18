@@ -1,9 +1,11 @@
 <template>
-    <p>{{recipeName}}</p>
+    <section class="section">
+        <h3 class="title is-5">{{recipeName}}</h3>
+    </section>
 </template>
 
 <script>
-import RecipeService from '@/services/recipe.service';
+import RecipeService from '@/services/recipe-service';
 
 export default {
   name: 'Recipe',
@@ -17,8 +19,8 @@ export default {
       return this.recipe?.name;
     },
   },
-  created() {
-    this.recipe = RecipeService.getById(this.$route.params.id);
+  async created() {
+    this.recipe = await RecipeService.getById(this.$route.params.id);
   },
 };
 </script>

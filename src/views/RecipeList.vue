@@ -33,7 +33,7 @@
     </div>
 </template>
 <script>
-import RecipeService from '@/services/recipe.service';
+import RecipeService from '@/services/recipe-service';
 
 export default {
   name: 'RecipeList',

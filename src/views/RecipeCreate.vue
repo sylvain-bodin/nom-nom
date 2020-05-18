@@ -3,6 +3,7 @@
         <h3 class="title is-5">Ajouter une recette</h3>
         <ValidationObserver ref="observer" v-slot="{ passes }">
             <BInputWithValidation
+                    id="name"
                     rules="required"
                     type="text"
                     label="Nom"
@@ -12,13 +13,16 @@
 
             <div class="buttons">
                 <b-button
+                        id="add"
                         @click="passes(submit)"
                         type="is-success"
                         icon-left="check"
+                        :loading="loading"
                 >
-                   Ajouter
+                    Ajouter
                 </b-button>
                 <b-button
+                        id="reset"
                         @click="reset"
                         icon-left="redo"
                 >
@@ -30,7 +34,7 @@
 </template>
 
 <script>
-import RecipeService from '@/services/recipe.service';
+import RecipeService from '@/services/recipe-service';
 import { ValidationObserver } from 'vee-validate';
 import BInputWithValidation from '../components/inputs/BInputWithValidation.vue';
 
@@ -46,6 +50,7 @@ export default {
         id: null,
         name: null,
       },
+      loading: false,
     };
   },
   methods: {
@@ -56,8 +61,14 @@ export default {
       });
     },
     submit() {
-      RecipeService.add(this.recipe);
-      this.$router.push({ name: 'RecipeList' });
+      this.loading = true;
+      RecipeService.add(this.recipe)
+        .then(() => {
+          this.$router.push({ name: 'RecipeList' });
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
   },
 };

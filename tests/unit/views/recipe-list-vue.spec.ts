@@ -2,12 +2,13 @@ import Vue from 'vue';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import RecipeList from '@/views/RecipeList.vue';
 import Buefy from 'buefy';
-import RecipeService from '@/services/recipe.service';
+import RecipeService from '@/services/recipe-service';
+
+import fn = jest.fn;
 
 const localVue = createLocalVue();
 localVue.use(Buefy);
 
-const mockGetAll = jest.spyOn(RecipeService, 'getAll');
 const recipeList = [
   {
     id: 1,
@@ -33,7 +34,7 @@ function createWrapper() {
 describe('RecipeList.vue', () => {
   it('should render the list of recipe', async () => {
     // given
-    mockGetAll.mockImplementation(() => Promise.resolve(recipeList));
+    RecipeService.getAll = fn().mockImplementation(() => Promise.resolve(recipeList));
     const wrapper = createWrapper();
 
     // when
