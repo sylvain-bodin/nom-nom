@@ -19,8 +19,8 @@ function createWrapper() {
   });
 }
 
-xdescribe('RecipeCreate', () => {
-  it('should create a recipe', async () => {
+describe('RecipeCreate', () => {
+  xit('should create a recipe', async () => {
     // given
     recipeService.add = fn().mockImplementation(() => Promise.resolve());
     const wrapper = createWrapper();

@@ -6,6 +6,7 @@
                     to="/recipe/create"
                     size="is-large"
                     icon-right="plus"
+                    data-test="add-recipe"
             >
                 Ajouter une recette
             </b-button>
@@ -15,7 +16,7 @@
                     width="50%"
                     :active="loading"
             ></b-skeleton>
-            <ul v-if="!loading" class="test">
+            <ul v-if="!loading" class="test" data-test="recipe-list">
                 <li
                         v-for="recipe in recipes"
                         :key="recipe.id"

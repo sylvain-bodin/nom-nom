@@ -9,6 +9,7 @@
                     label="Nom"
                     v-model="recipe.name"
                     placeholder="Nom de la recette"
+                    data-test="name"
             />
             <BInputWithValidation
                     id="url"
@@ -18,6 +19,7 @@
                     v-model="recipe.url"
                     placeholder="URL de la recette"
                     icon="globe"
+                    data-test="url"
             />
 
             <div class="buttons">
@@ -27,6 +29,7 @@
                         type="is-success"
                         icon-left="check"
                         :loading="loading"
+                        data-test="submit"
                 >
                     Ajouter
                 </b-button>
@@ -34,6 +37,7 @@
                         id="reset"
                         @click="reset"
                         icon-left="redo"
+                        data-test="reset"
                 >
                     Réinitialiser
                 </b-button>
@@ -62,6 +66,7 @@ export default {
   methods: {
     reset() {
       this.recipe.name = null;
+      this.recipe.url = null;
       requestAnimationFrame(() => {
         this.$refs.observer.reset();
       });
