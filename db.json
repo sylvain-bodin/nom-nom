@@ -15,6 +15,11 @@
     {
       "id": 4,
       "name": "TEst"
+    },
+    {
+      "name": "Test avec url",
+      "url": "https://www.marmiton.org/recettes/recette_souffles-de-carottes-au-gouda-au-cumin_70699.aspx",
+      "id": 5
     }
   ]
 }

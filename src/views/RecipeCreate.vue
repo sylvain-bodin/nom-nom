@@ -10,6 +10,15 @@
                     v-model="recipe.name"
                     placeholder="Nom de la recette"
             />
+            <BInputWithValidation
+                    id="url"
+                    rules="required|url"
+                    type="url"
+                    label="URL de la recette"
+                    v-model="recipe.url"
+                    placeholder="URL de la recette"
+                    icon="globe"
+            />
 
             <div class="buttons">
                 <b-button
@@ -46,10 +55,7 @@ export default {
   },
   data() {
     return {
-      recipe: {
-        id: null,
-        name: null,
-      },
+      recipe: {},
       loading: false,
     };
   },

@@ -9,3 +9,9 @@ Object.keys(rules)
       message: messages[rule], // assign message
     });
   });
+
+const urlPattern = /(https?|ftp):\/\/(-\.)?([^\s/?.#-]+\.?)+(\/[^\s]*)?$/i;
+extend('url', {
+  validate: (value) => urlPattern.test(value),
+  message: 'Le champ {_field_} n\'est pas une URL valide. e.g.: https://www.exemple.com',
+});
