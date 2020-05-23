@@ -13,7 +13,8 @@
     "baseUrl": ".",
     "types": [
       "webpack-env",
-      "cypress"
+      "cypress",
+      "cypress-file-upload"
     ],
     "paths": {
       "@/*": [

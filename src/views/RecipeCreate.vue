@@ -23,7 +23,7 @@
             />
             <ValidationProvider
                     v-slot="{ errors, valid }"
-                    :rules="`${upload.size ? 'image':''}`"
+                    :rules="`${hasUpload? 'image':''}`"
                     name="Image"
                     ref="uploadProvider"
             >
@@ -38,13 +38,14 @@
                                 drag-drop
                                 expanded
                                 @input="getFileData"
+                                data-test="upload"
                         >
                             <section class="section">
                                 <div class="content has-text-centered">
                                     <p>
                                         <b-icon icon="upload" size="is-large"></b-icon>
                                     </p>
-                                    <p>{{upload.name || 'Envoyer une image'}}</p>
+                                    <p>{{fileName}}</p>
                                 </div>
                             </section>
                         </b-upload>
@@ -57,7 +58,9 @@
                         ellipsis
                         icon="label"
                         rounded
-                        placeholder="Ajouter une étiquette">
+                        placeholder="Ajouter une étiquette"
+                        data-test="tags"
+                >
                 </b-taginput>
             </b-field>
             <div class="buttons">
@@ -100,14 +103,22 @@ export default {
   data() {
     return {
       recipe: {},
-      upload: {},
+      upload: null,
       loading: false,
     };
+  },
+  computed: {
+    hasUpload() {
+      return this.upload;
+    },
+    fileName() {
+      return this.upload ? this.upload.name : 'Envoyer une image';
+    },
   },
   methods: {
     reset() {
       this.recipe = {};
-      this.upload = {};
+      this.upload = null;
       requestAnimationFrame(() => {
         this.$refs.observer.reset();
       });

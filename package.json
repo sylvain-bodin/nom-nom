@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:e2e": "vue-cli-service test:e2e",
+    "test:e2e": "vue-cli-service test:e2e --mode development",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -27,11 +27,11 @@
     "@vue/cli-service": "~4.3.0",
     "@vue/eslint-config-airbnb": "^5.0.2",
     "@vue/eslint-config-typescript": "^5.0.2",
+    "cypress-file-upload": "^3.5.3",
     "cypress-intellij-reporter": "0.0.4",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^6.2.2",
-    "flush-promises": "^1.0.2",
     "json-server": "^0.16.1",
     "typescript": "~3.8.3",
     "vue-cli-plugin-buefy": "~0.3.7",
