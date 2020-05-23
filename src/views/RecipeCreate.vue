@@ -1,7 +1,7 @@
 <template>
     <section class="content">
         <h3 class="title is-5">Ajouter une recette</h3>
-        <ValidationObserver ref="observer" v-slot="{ passes }">
+        <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
             <BInputWithValidation
                     id="name"
                     rules="required"
@@ -21,11 +21,49 @@
                     icon="globe"
                     data-test="url"
             />
-
+            <ValidationProvider
+                    v-slot="{ errors, valid }"
+                    :rules="`${upload.size ? 'image':''}`"
+                    name="Image"
+                    ref="uploadProvider"
+            >
+                <b-field
+                        label="Image"
+                        :message="errors"
+                        :type="{ 'is-danger': errors[0], 'is-success': valid }"
+                >
+                    <b-field>
+                        <b-upload
+                                v-model="upload"
+                                drag-drop
+                                expanded
+                                @input="getFileData"
+                        >
+                            <section class="section">
+                                <div class="content has-text-centered">
+                                    <p>
+                                        <b-icon icon="upload" size="is-large"></b-icon>
+                                    </p>
+                                    <p>{{upload.name || 'Envoyer une image'}}</p>
+                                </div>
+                            </section>
+                        </b-upload>
+                    </b-field>
+                </b-field>
+            </ValidationProvider>
+            <b-field label="Etiquettes">
+                <b-taginput
+                        v-model="recipe.tags"
+                        ellipsis
+                        icon="label"
+                        rounded
+                        placeholder="Ajouter une étiquette">
+                </b-taginput>
+            </b-field>
             <div class="buttons">
                 <b-button
                         id="add"
-                        @click="passes(submit)"
+                        @click="handleSubmit(submit)"
                         type="is-success"
                         icon-left="check"
                         :loading="loading"
@@ -48,25 +86,28 @@
 
 <script>
 import RecipeService from '@/services/recipe-service';
-import { ValidationObserver } from 'vee-validate';
+import { ValidationObserver, ValidationProvider } from 'vee-validate';
 import BInputWithValidation from '../components/inputs/BInputWithValidation.vue';
 
+const reader = new FileReader();
 export default {
   name: 'RecipeCreate',
   components: {
     ValidationObserver,
+    ValidationProvider,
     BInputWithValidation,
   },
   data() {
     return {
       recipe: {},
+      upload: {},
       loading: false,
     };
   },
   methods: {
     reset() {
-      this.recipe.name = null;
-      this.recipe.url = null;
+      this.recipe = {};
+      this.upload = {};
       requestAnimationFrame(() => {
         this.$refs.observer.reset();
       });
@@ -81,10 +122,24 @@ export default {
           this.loading = false;
         });
     },
+    async getFileData(value) {
+      const { valid } = await this.$refs.uploadProvider.validate(value);
+
+      if (valid) {
+        reader.addEventListener('load', () => {
+          this.recipe.image = reader.result;
+        });
+        reader.readAsDataURL(value);
+      } else {
+        this.recipe.image = null;
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
-
+    .buttons {
+        margin-top: 1em;
+    }
 </style>
