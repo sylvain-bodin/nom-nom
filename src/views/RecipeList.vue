@@ -34,7 +34,7 @@
     </div>
 </template>
 <script>
-import RecipeService from '@/services/recipe-service';
+import recipeService from '@/services/recipe-service';
 
 export default {
   name: 'RecipeList',
@@ -45,7 +45,7 @@ export default {
     };
   },
   mounted() {
-    RecipeService.getAll()
+    recipeService.getAll()
       .then((recipes) => {
         this.recipes = recipes;
       })

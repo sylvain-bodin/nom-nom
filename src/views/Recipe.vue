@@ -1,26 +1,45 @@
 <template>
-    <section class="section">
-        <h3 class="title is-5">{{recipeName}}</h3>
+    <section class="content">
+        <h3 class="title is-4 has-text-centered">
+            <template v-if="!loading">{{recipe.name}}</template>
+            <b-skeleton :active="loading"></b-skeleton>
+        </h3>
+        <b-skeleton
+                height="480px"
+                :active="loading"
+        ></b-skeleton>
+        <figure class="image is-4by3" v-if="!loading">
+            <img :src="recipe.image" alt="image de la recette">
+        </figure>
+        <p>
+            <a :href="recipe.url">Lien vers la recette</a>
+        </p>
+        <h4 class="subtitle is-6">Etiquettes : </h4>
+        <b-taglist>
+            <b-tag type="is-info" v-for="tag in recipe.tags" :key="tag">{{tag}}</b-tag>
+        </b-taglist>
     </section>
 </template>
 
 <script>
-import RecipeService from '@/services/recipe-service';
+import recipeService from '@/services/recipe-service';
 
 export default {
   name: 'Recipe',
   data() {
     return {
-      recipe: undefined,
+      recipe: {},
+      loading: true,
     };
   },
-  computed: {
-    recipeName() {
-      return this.recipe?.name;
-    },
-  },
-  async created() {
-    this.recipe = await RecipeService.getById(this.$route.params.id);
+  mounted() {
+    recipeService.getById(this.$route.params.id)
+      .then((recipe) => {
+        this.recipe = recipe;
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   },
 };
 </script>
