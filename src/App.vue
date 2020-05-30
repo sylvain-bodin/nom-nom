@@ -7,6 +7,30 @@
                     <h2 class="subtitle">Qu'allez-vous manger ce soir ?</h2>
                 </div>
             </div>
+            <div class="hero-foot">
+                <nav class="tabs is-centered is-boxed ">
+                    <div class="container">
+                        <ul>
+                            <router-link
+                                    :to="{name:'RecipeList'}"
+                                    v-slot="{ href, route, navigate, isActive }"
+                            >
+                                <li :class="[isActive && 'is-active']">
+                                    <a :href="href" @click="navigate">Liste des recettes</a>
+                                </li>
+                            </router-link>
+                            <router-link
+                                    :to="{name:'RecipeCreate'}"
+                                    v-slot="{ href, route, navigate, isActive }"
+                            >
+                                <li :class="[isActive && 'is-active']">
+                                    <a :href="href" @click="navigate">Ajouter une recette</a>
+                                </li>
+                            </router-link>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
         </section>
         <section class="section">
             <div class="container">
@@ -15,9 +39,10 @@
         </section>
     </div>
 </template>
-<script>
-export default {
-};
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({});
 </script>
 <style>
     #app {

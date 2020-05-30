@@ -34,7 +34,7 @@
                 >
                     <b-field>
                         <b-upload
-                                v-model="upload"
+                                v-model="uploadFile"
                                 drag-drop
                                 expanded
                                 @input="getFileData"
@@ -87,13 +87,15 @@
     </section>
 </template>
 
-<script>
+<script lang="ts">
 import RecipeService from '@/services/recipe-service';
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
+import Vue from 'vue';
+import { RecipeModel } from '@/models/recipe-model';
 import BInputWithValidation from '../components/inputs/BInputWithValidation.vue';
 
 const reader = new FileReader();
-export default {
+export default Vue.extend({
   name: 'RecipeCreate',
   components: {
     ValidationObserver,
@@ -102,25 +104,24 @@ export default {
   },
   data() {
     return {
-      recipe: {},
-      upload: null,
+      recipe: {} as RecipeModel,
+      uploadFile: null as File | null,
       loading: false,
     };
   },
   computed: {
-    hasUpload() {
-      return this.upload;
+    hasUpload(): boolean {
+      return !!this.uploadFile;
     },
-    fileName() {
-      return this.upload ? this.upload.name : 'Envoyer une image';
+    fileName(): string {
+      return this.uploadFile ? this.uploadFile.name : 'Envoyer une image';
     },
   },
   methods: {
     reset() {
-      this.recipe = {};
-      this.upload = null;
+      this.recipe = { _id: null, name: '' };
       requestAnimationFrame(() => {
-        this.$refs.observer.reset();
+        (this.$refs.observer as InstanceType<typeof ValidationObserver>).reset();
       });
     },
     submit() {
@@ -133,20 +134,21 @@ export default {
           this.loading = false;
         });
     },
-    async getFileData(value) {
-      const { valid } = await this.$refs.uploadProvider.validate(value);
+    async getFileData(value: File) {
+      const valid = await
+      (this.$refs.uploadProvider as InstanceType<typeof ValidationProvider>).validate(value);
 
       if (valid) {
         reader.addEventListener('load', () => {
-          this.recipe.image = reader.result;
+          this.recipe.image = reader.result as string;
         });
         reader.readAsDataURL(value);
       } else {
-        this.recipe.image = null;
+        this.recipe.image = undefined;
       }
     },
   },
-};
+});
 </script>
 
 <style scoped>

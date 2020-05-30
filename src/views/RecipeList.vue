@@ -16,31 +16,47 @@
                     width="50%"
                     :active="loading"
             ></b-skeleton>
+            <article
+                    class="media"
+                    v-for="recipe in recipes"
+                    :key="recipe._id"
+                    data-test="recipe-list"
+            >
+                <figure class="media-left">
+                    <p class="image is-48x48">
+                        <img :src="recipe.image" alt="Aperçu de la recette">
+                    </p>
+                </figure>
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <router-link
+                                    :to="{name:'Recipe', params:{id: recipe._id}}"
+                            >
+                                <strong>{{recipe.name}}</strong>
+                            </router-link>
+                        </p>
+                    </div>
+
+                </div>
+            </article>
             <ul v-if="!loading" class="test" data-test="recipe-list">
-                <li
-                        v-for="recipe in recipes"
-                        :key="recipe.id"
-                >
-                    <router-link
-                            :to="{name:'Recipe', params:{id: recipe.id}}"
-                    >
-                        {{recipe.name}}
-                    </router-link>
-                </li>
             </ul>
 
         </div>
 
     </div>
 </template>
-<script>
+<script lang="ts">
 import recipeService from '@/services/recipe-service';
+import Vue from 'vue';
+import { RecipeModel } from '@/models/recipe-model';
 
-export default {
+export default Vue.extend({
   name: 'RecipeList',
   data() {
     return {
-      recipes: [],
+      recipes: [] as RecipeModel[],
       loading: true,
     };
   },
@@ -53,7 +69,7 @@ export default {
         this.loading = false;
       });
   },
-};
+});
 </script>
 <style scoped>
     .b-skeleton {

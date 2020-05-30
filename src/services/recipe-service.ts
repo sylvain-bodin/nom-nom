@@ -1,4 +1,4 @@
-import { RecipeModel } from '@/model/recipe-model';
+import { RecipeModel } from '@/models/recipe-model';
 import HttpClient from '@/services/http-client';
 
 class RecipeService {
@@ -16,7 +16,7 @@ class RecipeService {
    * Return the recipe by its id or undefined if not found
    * @param id the recipe id.
    */
-  getById(id: number): Promise<RecipeModel> {
+  getById(id: string): Promise<RecipeModel> {
     return this.httpClient.get(`/recipes/${id}`)
       .then((response) => response.data);
   }

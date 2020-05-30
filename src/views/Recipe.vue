@@ -8,7 +8,7 @@
                 height="480px"
                 :active="loading"
         ></b-skeleton>
-        <figure class="image is-4by3" v-if="!loading">
+        <figure class="image" v-if="!loading">
             <img :src="recipe.image" alt="image de la recette">
         </figure>
         <p>
@@ -21,14 +21,16 @@
     </section>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import recipeService from '@/services/recipe-service';
+import { RecipeModel } from '@/models/recipe-model';
 
-export default {
+export default Vue.extend({
   name: 'Recipe',
   data() {
     return {
-      recipe: {},
+      recipe: {} as RecipeModel,
       loading: true,
     };
   },
@@ -41,7 +43,7 @@ export default {
         this.loading = false;
       });
   },
-};
+});
 </script>
 
 <style scoped>
