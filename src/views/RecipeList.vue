@@ -16,33 +16,32 @@
                     width="50%"
                     :active="loading"
             ></b-skeleton>
-            <article
-                    class="media"
-                    v-for="recipe in recipes"
-                    :key="recipe._id"
-                    data-test="recipe-list"
-            >
-                <figure class="media-left">
-                    <p class="image is-48x48">
-                        <img :src="recipe.image" alt="Aperçu de la recette">
-                    </p>
-                </figure>
-                <div class="media-content">
-                    <div class="content">
-                        <p>
-                            <router-link
-                                    :to="{name:'Recipe', params:{id: recipe._id}}"
-                            >
-                                <strong>{{recipe.name}}</strong>
-                            </router-link>
+            <div data-test="recipe-list" v-if="!loading">
+                <article
+                        class="media"
+                        v-for="recipe in recipes"
+                        :key="recipe._id"
+
+                >
+                    <figure class="media-left">
+                        <p class="image is-48x48">
+                            <img :src="recipe.image" alt="Aperçu de la recette">
                         </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <router-link
+                                        :to="{name:'Recipe', params:{id: recipe._id}}"
+                                >
+                                    <strong>{{recipe.name}}</strong>
+                                </router-link>
+                            </p>
+                        </div>
+
                     </div>
-
-                </div>
-            </article>
-            <ul v-if="!loading" class="test" data-test="recipe-list">
-            </ul>
-
+                </article>
+            </div>
         </div>
 
     </div>

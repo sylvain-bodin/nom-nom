@@ -34,7 +34,7 @@ describe('Show the index page', () => {
     cy.wait('@getRecipes');
 
     // when
-    cy.get('[data-test=recipe-list]').children().first().children('a')
+    cy.get('[data-test=recipe-list]').children().first().find('a')
       .click();
 
     // then
