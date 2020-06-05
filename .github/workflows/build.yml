@@ -28,8 +28,8 @@ jobs:
         run: |
           npm ci
           npm run build
-      - name: Tests
-        run: npm run test:e2e:ci
+      #      - name: Tests
+      #        run: npm run test:e2e:ci
       - name: Save artifacts
         uses: actions/upload-artifact@v2
         with:
