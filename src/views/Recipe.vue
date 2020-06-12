@@ -24,13 +24,13 @@
 <script lang="ts">
 import Vue from 'vue';
 import recipeService from '@/services/recipe-service';
-import { RecipeModel } from '@/models/recipe-model';
+import { Recipe } from '@/models/recipe';
 
 export default Vue.extend({
   name: 'Recipe',
   data() {
     return {
-      recipe: {} as RecipeModel,
+      recipe: {} as Recipe,
       loading: true,
     };
   },

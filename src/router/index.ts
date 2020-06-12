@@ -3,10 +3,16 @@ import VueRouter, { RouteConfig } from 'vue-router';
 import Recipe from '@/views/Recipe.vue';
 import RecipeList from '@/views/RecipeList.vue';
 import RecipeCreate from '@/views/RecipeCreate.vue';
+import Login from '@/views/Login.vue';
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+  },
   {
     path: '/recipe/list',
     alias: '/',

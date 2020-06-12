@@ -91,7 +91,7 @@
 import RecipeService from '@/services/recipe-service';
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
 import Vue from 'vue';
-import { RecipeModel } from '@/models/recipe-model';
+import { Recipe } from '@/models/recipe';
 import BInputWithValidation from '../components/inputs/BInputWithValidation.vue';
 
 const reader = new FileReader();
@@ -104,7 +104,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      recipe: {} as RecipeModel,
+      recipe: {} as Recipe,
       uploadFile: null as File | null,
       loading: false,
     };

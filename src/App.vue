@@ -4,10 +4,12 @@
             <div class="hero-body">
                 <div class="container">
                     <h1 class="title"> NomNom</h1>
-                    <h2 class="subtitle">Qu'allez-vous manger ce soir ?</h2>
+                    <h2 class="subtitle">
+                        Qu'allez-vous manger ce soir {{user ? user.name : ''}} ?
+                    </h2>
                 </div>
             </div>
-            <div class="hero-foot">
+            <div class="hero-foot" v-if="user">
                 <nav class="tabs is-centered is-boxed ">
                     <div class="container">
                         <ul>
@@ -41,8 +43,24 @@
 </template>
 <script lang="ts">
 import Vue from 'vue';
+import userService from '@/services/user-service';
+import { User } from '@/models/user';
 
-export default Vue.extend({});
+export default Vue.extend({
+  data() {
+    return {
+      user: undefined as unknown as User,
+    };
+  },
+  mounted() {
+    userService.getConnectedUser().then((user) => {
+      this.user = user;
+      if (!this.user && this.$route.name !== 'Login') {
+        this.$router.push({ name: 'Login' });
+      }
+    });
+  },
+});
 </script>
 <style>
     #app {

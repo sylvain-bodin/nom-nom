@@ -6,6 +6,7 @@ const HttpClient = axios.create({
     Accept: 'application/json',
     'Content-Type': 'application/json',
   },
+  withCredentials: process.env.WITH_CREDENTIAL || false,
 });
 
 export default HttpClient;

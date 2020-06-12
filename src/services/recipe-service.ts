@@ -1,4 +1,4 @@
-import { RecipeModel } from '@/models/recipe-model';
+import { Recipe } from '@/models/recipe';
 import HttpClient from '@/services/http-client';
 
 class RecipeService {
@@ -7,7 +7,7 @@ class RecipeService {
   /**
    * Return all the recipes
    */
-  getAll(): Promise<RecipeModel[]> {
+  getAll(): Promise<Recipe[]> {
     return this.httpClient.get('/recipes')
       .then((response) => response.data);
   }
@@ -16,7 +16,7 @@ class RecipeService {
    * Return the recipe by its id or undefined if not found
    * @param id the recipe id.
    */
-  getById(id: string): Promise<RecipeModel> {
+  getById(id: string): Promise<Recipe> {
     return this.httpClient.get(`/recipes/${id}`)
       .then((response) => response.data);
   }
@@ -25,7 +25,7 @@ class RecipeService {
    * Add a recipe in the database
    * @param recipe the recipe to add
    */
-  add(recipe: RecipeModel): Promise<RecipeModel> {
+  add(recipe: Recipe): Promise<Recipe> {
     return this.httpClient.post('/recipes', recipe).then((response) => response.data);
   }
 }
