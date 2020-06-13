@@ -31,6 +31,7 @@
                     size="is-medium"
                     icon-left="google"
                     icon-pack="fab"
+                    class="google"
             >
                 Se connecter avec Google
             </b-button>
@@ -54,5 +55,11 @@ export default Vue.extend({
     .my-2 {
         margin-top: 0.5rem;
         margin-bottom: 0.5rem;
+    }
+
+    .button.google {
+        background-color: #ff0537;
+        border-color: transparent;
+        color: white;
     }
 </style>

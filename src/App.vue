@@ -55,6 +55,7 @@ export default Vue.extend({
   mounted() {
     userService.getConnectedUser().then((user) => {
       this.user = user;
+    }).finally(() => {
       if (!this.user && this.$route.name !== 'Login') {
         this.$router.push({ name: 'Login' });
       }
