@@ -20,6 +20,8 @@
                     size="is-medium"
                     icon-left="twitter"
                     icon-pack="fab"
+                    tag="a"
+                    :href="baseUrl+'/auth/twitter'"
             >
                 Se connecter avec Twitter
             </b-button>
@@ -32,6 +34,8 @@
                     icon-left="google"
                     icon-pack="fab"
                     class="google"
+                    tag="a"
+                    :href="baseUrl+'/auth/google'"
             >
                 Se connecter avec Google
             </b-button>
@@ -61,5 +65,9 @@ export default Vue.extend({
         background-color: #ff0537;
         border-color: transparent;
         color: white;
+    }
+
+    .button.google:hover {
+        background-color: rgba(255, 5, 55, 0.9);
     }
 </style>
