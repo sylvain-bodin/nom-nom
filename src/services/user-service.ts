@@ -5,7 +5,7 @@ class UserService {
   private httpClient = HttpClient;
 
   getConnectedUser(): Promise<User> {
-    return this.httpClient.get('/auth/me', { withCredentials: true }).then((response) => response.data);
+    return this.httpClient.get('/auth/me').then((response) => response.data);
   }
 }
 
