@@ -1,42 +1,36 @@
 <template>
     <div class="has-text-centered">
         <div class="my-2">
-            <b-button
-                    type="is-info"
-                    rounded
-                    size="is-medium"
-                    icon-left="facebook"
-                    icon-pack="fab"
-                    tag="a"
-                    :href="baseUrl+'/auth/facebook'"
-            >
+            <b-button type="is-info"
+                      rounded
+                      size="is-medium"
+                      icon-left="facebook"
+                      icon-pack="fab"
+                      tag="a"
+                      :href="baseUrl+'/auth/facebook'">
                 Se connecter avec Facebook
             </b-button>
         </div>
         <div class="my-2">
-            <b-button
-                    type="is-info"
-                    rounded
-                    size="is-medium"
-                    icon-left="twitter"
-                    icon-pack="fab"
-                    tag="a"
-                    :href="baseUrl+'/auth/twitter'"
-            >
+            <b-button type="is-info"
+                      rounded
+                      size="is-medium"
+                      icon-left="twitter"
+                      icon-pack="fab"
+                      tag="a"
+                      :href="baseUrl+'/auth/twitter'">
                 Se connecter avec Twitter
             </b-button>
         </div>
         <div class="my-2">
-            <b-button
-                    type="is-danger"
-                    rounded
-                    size="is-medium"
-                    icon-left="google"
-                    icon-pack="fab"
-                    class="google"
-                    tag="a"
-                    :href="baseUrl+'/auth/google'"
-            >
+            <b-button type="is-danger"
+                      rounded
+                      size="is-medium"
+                      icon-left="google"
+                      icon-pack="fab"
+                      class="google"
+                      tag="a"
+                      :href="baseUrl+'/auth/google'">
                 Se connecter avec Google
             </b-button>
         </div>
