@@ -27,6 +27,7 @@ jobs:
       - name: Clean install dependencies and build
         run: |
           npm ci
+          npm run lint
           npm run build
       #      - name: Tests
       #        run: npm run test:e2e:ci
