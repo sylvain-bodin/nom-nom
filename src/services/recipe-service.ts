@@ -1,5 +1,6 @@
-import { Recipe } from '@/models/recipe';
+import {Recipe} from '@/models/recipe';
 import HttpClient from '@/services/http-client';
+import {Ingredient} from '@/models/ingredients';
 
 class RecipeService {
   private httpClient = HttpClient;
@@ -27,6 +28,18 @@ class RecipeService {
    */
   add(recipe: Recipe): Promise<Recipe> {
     return this.httpClient.post('/recipes', recipe).then((response) => response.data);
+  }
+
+  /**
+   * Import a recipe
+   * @param url the url of the recipe to import
+   */
+  import(url: string | undefined): Promise<Recipe> {
+    return this.httpClient.post('/recipes/import', {url}).then((response) => response.data);
+  }
+
+  getIngredients(text: string): Promise<Ingredient[]> {
+    return this.httpClient.post('/recipes/ingredients/transform', {text}).then((response) => response.data);
   }
 }
 

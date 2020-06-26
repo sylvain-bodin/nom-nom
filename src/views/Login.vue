@@ -44,15 +44,15 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+  import Vue from 'vue';
 
-export default Vue.extend({
-  data() {
-    return {
-      baseUrl: process.env.VUE_APP_API_URL,
-    };
-  },
-});
+  export default Vue.extend({
+    data() {
+      return {
+        baseUrl: process.env.VUE_APP_API_URL,
+      };
+    },
+  });
 </script>
 
 <style scoped>
