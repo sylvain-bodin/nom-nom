@@ -35,11 +35,11 @@ class RecipeService {
    * @param url the url of the recipe to import
    */
   import(url: string | undefined): Promise<Recipe> {
-    return this.httpClient.post('/recipes/import', {url}).then((response) => response.data);
+    return this.httpClient.post('/recipes/import', { url }).then((response) => response.data);
   }
 
   getIngredients(text: string): Promise<Ingredient[]> {
-    return this.httpClient.post('/recipes/ingredients/transform', {text}).then((response) => response.data);
+    return this.httpClient.post('/recipes/ingredients/transform', { text }).then((response) => response.data);
   }
 }
 

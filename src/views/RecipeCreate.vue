@@ -144,88 +144,88 @@
   import BInputWithValidation from '../components/inputs/BInputWithValidation.vue';
 
   const reader = new FileReader();
-  export default Vue.extend({
-    name: 'RecipeCreate',
-    components: {
-      ValidationObserver,
-      ValidationProvider,
-      BInputWithValidation,
+export default Vue.extend({
+  name: 'RecipeCreate',
+  components: {
+    ValidationObserver,
+    ValidationProvider,
+    BInputWithValidation,
+  },
+  data() {
+    return {
+      recipe: {} as Recipe,
+      ingredientText: '',
+      uploadFile: null as File | null,
+      loading: false,
+      imported: false,
+      importing: false,
+    };
+  },
+  computed: {
+    hasUpload(): boolean {
+      return !!this.uploadFile;
     },
-    data() {
-      return {
-        recipe: {} as Recipe,
-        ingredientText: '',
-        uploadFile: null as File | null,
-        loading: false,
-        imported: false,
-        importing: false,
-      };
+    fileName(): string {
+      return this.uploadFile ? this.uploadFile.name : 'Envoyer une image';
     },
-    computed: {
-      hasUpload(): boolean {
-        return !!this.uploadFile;
-      },
-      fileName(): string {
-        return this.uploadFile ? this.uploadFile.name : 'Envoyer une image';
-      },
-      image(): string {
-        return this.recipe.image ? this.recipe.image : '';
-      },
+    image(): string {
+      return this.recipe.image ? this.recipe.image : '';
     },
-    methods: {
-      reset() {
-        this.recipe = {_id: null, name: '', ingredients: []};
-        this.imported = false;
-        requestAnimationFrame(() => {
-          (this.$refs.observer as InstanceType<typeof ValidationObserver>).reset();
-        });
-      },
-      async submit() {
-        this.loading = true;
-        this.recipe.ingredients = await recipeService.getIngredients(this.ingredientText);
-        recipeService.add(this.recipe)
-          .then(() => {
-            this.$router.push({name: 'RecipeList'});
-          })
-          .finally(() => {
-            this.loading = false;
-          });
-      },
-      async getFileData(value: File) {
-        const valid = await
-          (this.$refs.uploadProvider as InstanceType<typeof ValidationProvider>).validate(value);
-
-        if (valid) {
-          reader.addEventListener('load', () => {
-            this.recipe.image = reader.result as string;
-          });
-          reader.readAsDataURL(value);
-        } else {
-          this.recipe.image = undefined;
-        }
-      },
-      importRecipe() {
-        this.importing = true;
-        recipeService.import(this.recipe.url).then((recipe) => {
-          this.recipe = recipe;
-          let ingredients = '';
-          if (this.recipe.ingredients && this.recipe.ingredients.length > 0) {
-            this.recipe.ingredients.forEach((ingredient) => {
-              ingredients += `${ingredient.value ? `${ingredient.value} ` : ''}${ingredient.unit ? `${ingredient.unit} ` : ''}${ingredient.name}\n`;
-            });
-          }
-          this.ingredientText = ingredients;
-          this.imported = true;
+  },
+  methods: {
+    reset() {
+      this.recipe = { _id: null, name: '', ingredients: [] };
+      this.imported = false;
+      requestAnimationFrame(() => {
+        (this.$refs.observer as InstanceType<typeof ValidationObserver>).reset();
+      });
+    },
+    async submit() {
+      this.loading = true;
+      this.recipe.ingredients = await recipeService.getIngredients(this.ingredientText);
+      recipeService.add(this.recipe)
+        .then(() => {
+          this.$router.push({ name: 'RecipeList' });
         })
-          .finally(() => {
-            this.importing = false;
-          });
-      },
-      passImport() {
-        this.imported = true;
-      },
+        .finally(() => {
+          this.loading = false;
+        });
     },
-  });
+    async getFileData(value: File) {
+      const valid = await
+      (this.$refs.uploadProvider as InstanceType<typeof ValidationProvider>).validate(value);
+
+      if (valid) {
+        reader.addEventListener('load', () => {
+          this.recipe.image = reader.result as string;
+        });
+        reader.readAsDataURL(value);
+      } else {
+        this.recipe.image = undefined;
+      }
+    },
+    importRecipe() {
+      this.importing = true;
+      recipeService.import(this.recipe.url).then((recipe) => {
+        this.recipe = recipe;
+        let ingredients = '';
+        if (this.recipe.ingredients && this.recipe.ingredients.length > 0) {
+          this.recipe.ingredients.forEach((ingredient) => {
+            ingredients += `${ingredient.value ? `${ingredient.value} ` : ''}${ingredient.unit ? `${ingredient.unit} ` : ''}${ingredient.name}\n`;
+          });
+        }
+        this.ingredientText = ingredients;
+        this.imported = true;
+      })
+        .finally(() => {
+          this.importing = false;
+        });
+    },
+    passImport() {
+      this.imported = true;
+    },
+  },
+});
 </script>
 
 <style scoped>

@@ -41,12 +41,12 @@
   import Vue from 'vue';
 
   export default Vue.extend({
-    data() {
-      return {
-        baseUrl: process.env.VUE_APP_API_URL,
-      };
-    },
-  });
+  data() {
+    return {
+      baseUrl: process.env.VUE_APP_API_URL,
+    };
+  },
+});
 </script>
 
 <style scoped>
