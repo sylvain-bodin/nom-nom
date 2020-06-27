@@ -48,6 +48,9 @@
                             </div>
 
                         </div>
+                        <div class="media-right">
+                            <button class="delete" @click="deleteRecipe(recipe._id)"></button>
+                        </div>
                     </article>
                 </div>
             </div>
@@ -69,13 +72,21 @@ export default Vue.extend({
     };
   },
   mounted() {
-    recipeService.getAll()
-      .then((recipes) => {
-        this.recipes = recipes;
-      })
-      .finally(() => {
-        this.loading = false;
-      });
+    this.getAllRecipes();
+  },
+  methods: {
+    deleteRecipe(id: string) {
+      recipeService.delete(id).then(() => { this.getAllRecipes(); });
+    },
+    getAllRecipes() {
+      recipeService.getAll()
+        .then((recipes) => {
+          this.recipes = recipes;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
   },
 });
 </script>

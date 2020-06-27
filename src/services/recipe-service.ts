@@ -14,6 +14,14 @@ class RecipeService {
   }
 
   /**
+   * Add a recipe in the database
+   * @param recipe the recipe to add
+   */
+  add(recipe: Recipe): Promise<string> {
+    return this.httpClient.post('/recipes', recipe).then((response) => response.data);
+  }
+
+  /**
    * Return the recipe by its id or undefined if not found
    * @param id the recipe id.
    */
@@ -23,12 +31,13 @@ class RecipeService {
   }
 
   /**
-   * Add a recipe in the database
-   * @param recipe the recipe to add
+   * Delete a recipe by its id
+   * @param id the recipe id
    */
-  add(recipe: Recipe): Promise<Recipe> {
-    return this.httpClient.post('/recipes', recipe).then((response) => response.data);
+  delete(id: string): Promise<string> {
+    return this.httpClient.delete(`/recipes/${id}`).then((response) => response.data);
   }
+
 
   /**
    * Import a recipe
