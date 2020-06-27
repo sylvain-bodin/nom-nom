@@ -71,10 +71,9 @@
                              data-test="cookingTime">
                     </b-input>
                 </b-field>
-                <b-field label="Ingrédients">
+                <b-field :label="ingredientTitle">
                     <b-input type="textarea"
                              minlength="10"
-                             maxlength="100"
                              placeholder="Un ingrédient par ligne"
                              v-model="ingredientText">
                     </b-input>
@@ -126,7 +125,7 @@
                         id="pass"
                         @click="passImport"
                         type="is-danger"
-                        icon-left="check"
+                        icon-right="forward"
                         data-test="pass"
                 >
                     Passer l'import
@@ -137,13 +136,14 @@
 </template>
 
 <script lang="ts">
-  import recipeService from '@/services/recipe-service';
-  import {ValidationObserver, ValidationProvider} from 'vee-validate';
-  import Vue from 'vue';
-  import {Recipe} from '@/models/recipe';
-  import BInputWithValidation from '../components/inputs/BInputWithValidation.vue';
+import recipeService from '@/services/recipe-service';
+import { ValidationObserver, ValidationProvider } from 'vee-validate';
+import Vue from 'vue';
+import { Recipe } from '@/models/recipe';
+import Utils from '@/services/utils';
+import BInputWithValidation from '../components/inputs/BInputWithValidation.vue';
 
-  const reader = new FileReader();
+const reader = new FileReader();
 export default Vue.extend({
   name: 'RecipeCreate',
   components: {
@@ -171,6 +171,13 @@ export default Vue.extend({
     image(): string {
       return this.recipe.image ? this.recipe.image : '';
     },
+    ingredientTitle() {
+      let title = 'Ingrédients';
+      if (this.recipe.nbPortions) {
+        title += ` (${this.recipe.nbPortions} personnes)`;
+      }
+      return title;
+    },
   },
   methods: {
     reset() {
@@ -182,7 +189,7 @@ export default Vue.extend({
     },
     async submit() {
       this.loading = true;
-      this.recipe.ingredients = await recipeService.getIngredients(this.ingredientText);
+      this.recipe.ingredients = await recipeService.getIngredients(this.ingredientText.trim());
       recipeService.add(this.recipe)
         .then(() => {
           this.$router.push({ name: 'RecipeList' });
@@ -211,7 +218,7 @@ export default Vue.extend({
         let ingredients = '';
         if (this.recipe.ingredients && this.recipe.ingredients.length > 0) {
           this.recipe.ingredients.forEach((ingredient) => {
-            ingredients += `${ingredient.value ? `${ingredient.value} ` : ''}${ingredient.unit ? `${ingredient.unit} ` : ''}${ingredient.name}\n`;
+            ingredients += `${Utils.prettyPrint(ingredient)}\n`;
           });
         }
         this.ingredientText = ingredients;

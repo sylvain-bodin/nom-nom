@@ -1,6 +1,6 @@
-import {Recipe} from '@/models/recipe';
+import { Recipe } from '@/models/recipe';
 import HttpClient from '@/services/http-client';
-import {Ingredient} from '@/models/ingredients';
+import { Ingredient } from '@/models/ingredient';
 
 class RecipeService {
   private httpClient = HttpClient;
