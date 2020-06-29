@@ -50,6 +50,10 @@ class RecipeService {
   getIngredients(text: string): Promise<Ingredient[]> {
     return this.httpClient.post('/recipes/ingredients/transform', { text }).then((response) => response.data);
   }
+
+  getAllTags(): Promise<string[]> {
+    return this.httpClient.get('/recipes/tags').then((response) => response.data);
+  }
 }
 
 const recipeService = new RecipeService();

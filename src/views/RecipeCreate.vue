@@ -82,10 +82,15 @@
                     <b-taginput
                             v-model="recipe.tags"
                             ellipsis
-                            icon="label"
+                            icon="tags"
                             rounded
                             placeholder="Ajouter une étiquette"
                             data-test="tags"
+                            autocomplete
+                            :allow-new="true"
+                            :open-on-focus="true"
+                            :data="filteredTags"
+                            @typing="getFilteredTags"
                     >
                     </b-taginput>
                 </b-field>
@@ -159,6 +164,8 @@ export default Vue.extend({
       loading: false,
       imported: false,
       importing: false,
+      filteredTags: [] as string[],
+      allTags: [] as string[],
     };
   },
   computed: {
@@ -178,6 +185,10 @@ export default Vue.extend({
       }
       return title;
     },
+  },
+  async mounted() {
+    await this.getAllTags();
+    this.getFilteredTags('');
   },
   methods: {
     reset() {
@@ -230,6 +241,18 @@ export default Vue.extend({
     },
     passImport() {
       this.imported = true;
+    },
+    getFilteredTags(text: string) {
+      console.log(`getFilteredTags : ${text}`);
+      console.log(this.allTags);
+      this.filteredTags = this.allTags.filter((option) => option
+        .toString()
+        .toLowerCase()
+        .indexOf(text.toLowerCase()) >= 0);
+      console.log(this.filteredTags);
+    },
+    async getAllTags() {
+      this.allTags = await recipeService.getAllTags();
     },
   },
 });
