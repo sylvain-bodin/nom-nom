@@ -13,20 +13,22 @@
                 <nav class="tabs is-centered is-boxed ">
                     <div class="container">
                         <ul>
-                            <router-link
-                                    :to="{name:'RecipeList'}"
-                                    v-slot="{ href, route, navigate, isActive }"
-                            >
+                            <router-link :to="{name:'RecipeList'}"
+                                         v-slot="{ href, route, navigate, isActive }">
                                 <li :class="[isActive && 'is-active']">
                                     <a :href="href" @click="navigate">Liste des recettes</a>
                                 </li>
                             </router-link>
-                            <router-link
-                                    :to="{name:'RecipeCreate'}"
-                                    v-slot="{ href, route, navigate, isActive }"
-                            >
+                            <router-link :to="{name:'RecipeCreate'}"
+                                         v-slot="{ href, route, navigate, isActive }">
                                 <li :class="[isActive && 'is-active']">
                                     <a :href="href" @click="navigate">Ajouter une recette</a>
+                                </li>
+                            </router-link>
+                            <router-link :to="{name:'RecipeSearch'}"
+                                         v-slot="{ href, route, navigate, isActive }">
+                                <li :class="[isActive && 'is-active']">
+                                    <a :href="href" @click="navigate">Rechercher</a>
                                 </li>
                             </router-link>
                         </ul>

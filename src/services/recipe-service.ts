@@ -47,12 +47,27 @@ class RecipeService {
     return this.httpClient.post('/recipes/import', { url }).then((response) => response.data);
   }
 
+  /**
+   * Transform ingredients text into a list of ingredient
+   * @param text the ingredients text
+   */
   getIngredients(text: string): Promise<Ingredient[]> {
     return this.httpClient.post('/recipes/ingredients/transform', { text }).then((response) => response.data);
   }
 
+  /**
+   * Get all the tags of the recipes available in the database
+   */
   getAllTags(): Promise<string[]> {
     return this.httpClient.get('/recipes/tags').then((response) => response.data);
+  }
+
+  searchRecipes(first: number, last: number): Promise<Paginate<Recipe>> {
+    const params = {
+      range: '',
+    };
+    params.range = `${first}-${last}`;
+    return this.httpClient.get('/recipes/search', { params }).then((response) => response.data);
   }
 }
 

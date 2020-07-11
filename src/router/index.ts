@@ -4,6 +4,7 @@ import Recipe from '@/views/Recipe.vue';
 import RecipeList from '@/views/RecipeList.vue';
 import RecipeCreate from '@/views/RecipeCreate.vue';
 import Login from '@/views/Login.vue';
+import RecipeSearch from '@/views/RecipeSearch.vue';
 
 Vue.use(VueRouter);
 
@@ -12,19 +13,20 @@ const routes: Array<RouteConfig> = [
     path: '/login',
     name: 'Login',
     component: Login,
-  },
-  {
+  }, {
     path: '/recipe/list',
     alias: '/',
     name: 'RecipeList',
     component: RecipeList,
-  },
-  {
+  }, {
     path: '/recipe/create',
     name: 'RecipeCreate',
     component: RecipeCreate,
-  },
-  {
+  }, {
+    path: '/recipe/search',
+    name: 'RecipeSearch',
+    component: RecipeSearch,
+  }, {
     path: '/recipe/:id',
     name: 'Recipe',
     component: Recipe,
