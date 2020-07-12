@@ -62,11 +62,17 @@ class RecipeService {
     return this.httpClient.get('/recipes/tags').then((response) => response.data);
   }
 
-  searchRecipes(first: number, last: number): Promise<Paginate<Recipe>> {
-    const params = {
-      range: '',
-    };
+  searchRecipes(first: number, last: number, sortField: string, sortOrder: string):
+    Promise<Paginate<Recipe>> {
+    const params = { range: '', sort: '', desc: '' };
     params.range = `${first}-${last}`;
+    if (sortField) {
+      if (sortOrder === 'asc') {
+        params.sort = sortField;
+      } else if (sortOrder === 'desc') {
+        params.desc = sortField;
+      }
+    }
     return this.httpClient.get('/recipes/search', { params }).then((response) => response.data);
   }
 }

@@ -14,6 +14,8 @@
                 backend-sorting
                 :default-sort-direction="defaultSortOrder"
                 :default-sort="[sortField, sortOrder]"
+                @sort="onSort"
+
                 sort-icon="menu-up"
                 aria-next-label="Page suivante"
                 aria-previous-label="Page précédente"
@@ -94,15 +96,21 @@ export default Vue.extend({
       const first = this.page * this.perPage - this.perPage;
       const last = this.page * this.perPage - 1;
       this.loading = true;
-      recipeService.searchRecipes(first, last).then((pagination) => {
-        this.recipes = pagination.items;
-        this.total = pagination.total;
-      }).finally(() => {
-        this.loading = false;
-      });
+      recipeService.searchRecipes(first, last, this.sortField, this.sortOrder)
+        .then((pagination) => {
+          this.recipes = pagination.items;
+          this.total = pagination.total;
+        }).finally(() => {
+          this.loading = false;
+        });
     },
     onPageChange(page: number) {
       this.page = page;
+      this.getRecipes();
+    },
+    onSort(field: string, order: string) {
+      this.sortField = field;
+      this.sortOrder = order;
       this.getRecipes();
     },
   },
