@@ -16,7 +16,7 @@
                             <router-link :to="{name:'RecipeList'}"
                                          v-slot="{ href, route, navigate, isActive }">
                                 <li :class="[isActive && 'is-active']">
-                                    <a :href="href" @click="navigate">Liste des recettes</a>
+                                    <a :href="href" @click="navigate">Dernières recettes</a>
                                 </li>
                             </router-link>
                             <router-link :to="{name:'RecipeCreate'}"

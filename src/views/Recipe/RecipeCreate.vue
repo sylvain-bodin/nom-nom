@@ -146,7 +146,7 @@ import { ValidationObserver, ValidationProvider } from 'vee-validate';
 import Vue from 'vue';
 import { Recipe } from '@/models/recipe';
 import Utils from '@/services/utils';
-import BInputWithValidation from '../components/inputs/BInputWithValidation.vue';
+import BInputWithValidation from '../../components/inputs/BInputWithValidation.vue';
 
 const reader = new FileReader();
 export default Vue.extend({

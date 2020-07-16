@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import Recipe from '@/views/Recipe.vue';
-import RecipeList from '@/views/RecipeList.vue';
-import RecipeCreate from '@/views/RecipeCreate.vue';
+import Recipe from '@/views/Recipe/Recipe.vue';
+import RecipeList from '@/views/Recipe/RecipeLast.vue';
+import RecipeCreate from '@/views/Recipe/RecipeCreate.vue';
 import Login from '@/views/Login.vue';
-import RecipeSearch from '@/views/RecipeSearch.vue';
+import RecipeSearch from '@/views/Recipe/RecipeSearch.vue';
 
 Vue.use(VueRouter);
 
