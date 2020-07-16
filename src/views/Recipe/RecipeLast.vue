@@ -10,8 +10,7 @@
                 <div data-test="recipe-list">
                     <RecipeLastMediaItem v-for="recipe in recipes"
                                          :recipe="recipe"
-                                         :key="recipe._id"
-                                         @delete-recipe="deleteRecipe"/>
+                                         :key="recipe._id"/>
                 </div>
             </div>
         </div>
@@ -46,11 +45,6 @@ export default Vue.extend({
         .finally(() => {
           this.loading = false;
         });
-    },
-    deleteRecipe(id: string) {
-      recipeService.delete(id).then(() => {
-        this.getLastRecipes();
-      });
     },
   },
 });

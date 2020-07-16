@@ -15,12 +15,6 @@
             </div>
 
         </div>
-        <div class="media-right">
-            <button class="delete"
-                    @click="$emit('delete-recipe',recipe._id)"
-                    title="Supprimer la recette">
-            </button>
-        </div>
     </article>
 </template>
 <script lang="ts">

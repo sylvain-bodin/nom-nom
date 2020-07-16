@@ -8,8 +8,8 @@
                 @page-change="onPageChange"
                 :per-page="perPage"
                 :total="total"
-                :pagination-simple="false"
                 striped
+                hoverable
 
                 backend-sorting
                 :default-sort-direction="defaultSortOrder"
@@ -23,7 +23,9 @@
                 aria-current-label="Page courante">
             <template slot-scope="props">
                 <b-table-column field="name" label="Titre" sortable>
-                    {{ props.row.name }}
+                    <router-link :to="{name:'Recipe', params:{id: props.row._id}}">
+                        {{ props.row.name }}
+                    </router-link>
                 </b-table-column>
 
                 <b-table-column field="preparationTime"
@@ -62,8 +64,13 @@
                     </span>
                 </b-table-column>
                 <b-table-column label="Actions">
-
+                    <b-button type="is-text"
+                              icon-left="trash"
+                              @click="deleteRecipe(props.row._id)"/>
                 </b-table-column>
+            </template>
+            <template slot="empty">
+                <RecipeLastAbsent></RecipeLastAbsent>
             </template>
         </b-table>
     </section>
@@ -73,9 +80,11 @@
 import Vue from 'vue';
 import recipeService from '@/services/recipe-service';
 import { Recipe } from '@/models/recipe';
+import RecipeLastAbsent from '@/views/Recipe/RecipeLastAbsent.vue';
 
 export default Vue.extend({
   name: 'RecipeSearch',
+  components: { RecipeLastAbsent },
   data() {
     return {
       page: 1,
@@ -112,6 +121,11 @@ export default Vue.extend({
       this.sortField = field;
       this.sortOrder = order;
       this.getRecipes();
+    },
+    deleteRecipe(id: string) {
+      recipeService.delete(id).then(() => {
+        this.getRecipes();
+      });
     },
   },
 });
