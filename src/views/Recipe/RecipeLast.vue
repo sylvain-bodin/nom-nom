@@ -35,13 +35,13 @@ export default Vue.extend({
     };
   },
   mounted() {
-    this.getAllRecipes();
+    this.getLastRecipes();
   },
   methods: {
-    getAllRecipes() {
-      recipeService.getAll()
-        .then((recipes) => {
-          this.recipes = recipes;
+    getLastRecipes() {
+      recipeService.searchRecipes(0, 4, 'createdAt', 'asc', ['name', 'image'])
+        .then((paginate) => {
+          this.recipes = paginate.items;
         })
         .finally(() => {
           this.loading = false;
@@ -49,7 +49,7 @@ export default Vue.extend({
     },
     deleteRecipe(id: string) {
       recipeService.delete(id).then(() => {
-        this.getAllRecipes();
+        this.getLastRecipes();
       });
     },
   },

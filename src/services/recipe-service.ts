@@ -62,9 +62,14 @@ class RecipeService {
     return this.httpClient.get('/recipes/tags').then((response) => response.data);
   }
 
-  searchRecipes(first: number, last: number, sortField: string, sortOrder: string):
+  searchRecipes(first: number, last: number, sortField: string, sortOrder = 'asc', fields?: string[]):
     Promise<Paginate<Recipe>> {
-    const params = { range: '', sort: '', desc: '' };
+    const params = {
+      range: '',
+      sort: null as unknown as string,
+      desc: null as unknown as string,
+      fields,
+    };
     params.range = `${first}-${last}`;
     if (sortField) {
       if (sortOrder === 'asc') {
