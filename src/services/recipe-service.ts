@@ -38,7 +38,6 @@ class RecipeService {
     return this.httpClient.delete(`/recipes/${id}`).then((response) => response.data);
   }
 
-
   /**
    * Import a recipe
    * @param url the url of the recipe to import
