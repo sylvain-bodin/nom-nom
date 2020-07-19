@@ -103,9 +103,8 @@ export default Vue.extend({
   methods: {
     getRecipes() {
       const first = this.page * this.perPage - this.perPage;
-      const last = this.page * this.perPage - 1;
       this.loading = true;
-      recipeService.searchRecipes(first, last, this.sortField, this.sortOrder)
+      recipeService.searchRecipes(first, this.perPage, this.sortField, this.sortOrder)
         .then((pagination) => {
           this.recipes = pagination.items;
           this.total = pagination.total;

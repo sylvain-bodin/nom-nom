@@ -38,7 +38,7 @@ export default Vue.extend({
   },
   methods: {
     getLastRecipes() {
-      recipeService.searchRecipes(0, 4, 'createdAt', 'desc', ['name', 'image'])
+      recipeService.searchRecipes(0, 5, 'createdAt', 'desc', 'name,image')
         .then((paginate) => {
           this.recipes = paginate.items;
         })
