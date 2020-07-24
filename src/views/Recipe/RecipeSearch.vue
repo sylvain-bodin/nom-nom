@@ -1,5 +1,27 @@
 <template>
     <section>
+        <section>
+            <b-field label="Nom">
+                <b-input v-model="search.name"></b-input>
+            </b-field>
+            <b-field label="Temps total maximum (min)">
+                <b-input v-model="search.maxTime" type="number"></b-input>
+            </b-field>
+            <b-field label="Etiquettes">
+                <b-taginput
+                        v-model="search.tags"
+                        ellipsis
+                        icon="tags"
+                        rounded
+                        autocomplete
+                        :open-on-focus="true"
+                        :data="filteredTags"
+                        @typing="getFilteredTags"
+                >
+                </b-taginput>
+            </b-field>
+            <b-button @click="getRecipes">Rechercher</b-button>
+        </section>
         <b-table
                 :data="recipes"
                 :loading="loading"
@@ -95,10 +117,14 @@ export default Vue.extend({
       defaultSortOrder: 'asc',
       recipes: [] as Recipe[],
       loading: false,
+      search: {},
+		filteredTags: [] as string[],
+		allTags: [] as string[],
     };
   },
-  mounted() {
-    this.getRecipes();
+  async mounted() {
+	  await this.getAllTags();
+	  this.getRecipes();
   },
   methods: {
     getRecipes() {
@@ -126,6 +152,18 @@ export default Vue.extend({
         this.getRecipes();
       });
     },
+	  getFilteredTags(text: string) {
+		  console.log(`getFilteredTags : ${text}`);
+		  console.log(this.allTags);
+		  this.filteredTags = this.allTags.filter((option) => option
+			  .toString()
+			  .toLowerCase()
+			  .indexOf(text.toLowerCase()) >= 0);
+		  console.log(this.filteredTags);
+	  },
+	  async getAllTags() {
+		  this.allTags = await recipeService.getAllTags();
+	  },
   },
 });
 </script>
